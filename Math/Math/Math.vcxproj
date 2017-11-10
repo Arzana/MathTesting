@@ -22,11 +22,14 @@
     <ClInclude Include="Configuration.h" />
     <ClInclude Include="Core\Basics.h" />
     <ClInclude Include="Core\Constants.h" />
+    <ClInclude Include="Core\Interpolation.h" />
     <ClInclude Include="Core\Vector2.h" />
     <ClInclude Include="Core\Vector2_Functions.h" />
     <ClInclude Include="Core\Vector3.h" />
     <ClInclude Include="Core\Vector3_Functions.h" />
     <ClInclude Include="Core\Vector4.h" />
+    <ClInclude Include="Core\Vector4_Functions.h" />
+    <ClInclude Include="Core\Vectors.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Vector2.cpp" />

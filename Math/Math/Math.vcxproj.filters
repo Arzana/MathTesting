@@ -43,6 +43,15 @@
     <ClInclude Include="Core\Vector3_Functions.h">
       <Filter>Source\Core\Vectors\Algebra</Filter>
     </ClInclude>
+    <ClInclude Include="Core\Vectors.h">
+      <Filter>Source\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Vector4_Functions.h">
+      <Filter>Source\Core\Vectors\Algebra</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Interpolation.h">
+      <Filter>Source\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Vector2.cpp">

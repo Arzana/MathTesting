@@ -24,18 +24,6 @@ namespace DeJong
 					   v.X * w.Y - v.Y * w.X);
 	}
 
-	/* Returns the distance between the two specified vectors. */
-	_Check_return_ inline float dist(_In_ Vector3 v, _In_ Vector3 w)
-	{
-		return length(w - v);
-	}
-
-	/* Returns the absolute distance between the two specified vectors. */
-	_Check_return_ inline float adist(_In_ Vector3 v, _In_ Vector3 w)
-	{
-		return abs(dist(v, w));
-	}
-
 	/* Returns the dot product of the two specified vectors. */
 	_Check_return_ inline float dot(_In_ Vector3 v, _In_ Vector3 w)
 	{
@@ -54,6 +42,18 @@ namespace DeJong
 		return sqrt(lengthsqrd(v));
 	}
 
+	/* Returns the distance between the two specified vectors. */
+	_Check_return_ inline float dist(_In_ Vector3 v, _In_ Vector3 w)
+	{
+		return length(w - v);
+	}
+
+	/* Returns the absolute distance between the two specified vectors. */
+	_Check_return_ inline float adist(_In_ Vector3 v, _In_ Vector3 w)
+	{
+		return abs(dist(v, w));
+	}
+
 	/* Returns a vector that defines the highest value from each matching pair of components. */
 	_Check_return_ inline Vector3 max(_In_ Vector3 v, _In_ Vector3 w)
 	{
@@ -66,7 +66,7 @@ namespace DeJong
 		return Vector3(min(v.X, w.X), min(v.Y, w.Y), min(v.Z, w.Z));
 	}
 
-	/* Normalizes the specified vector reducting its magnitude to one. */
+	/* Normalizes the specified vector reducing its magnitude to one. */
 	_Check_return_ inline Vector3 normalize(_In_ Vector3 v)
 	{
 		return v * recip(length(v));

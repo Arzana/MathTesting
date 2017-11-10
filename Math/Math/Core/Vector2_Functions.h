@@ -1,6 +1,7 @@
 #pragma once
 #include "Vector2.h"
 #include "Basics.h"
+#include "Interpolation.h"
 
 namespace DeJong
 {
@@ -34,18 +35,6 @@ namespace DeJong
 		return v.X * w.Y - v.Y * w.X;
 	}
 
-	/* Returns the distance between the two specified vectors. */
-	_Check_return_ inline float dist(_In_ Vector2 v, _In_ Vector2 w)
-	{
-		return length(w - v);
-	}
-
-	/* Returns the absolute distance between the two specified vectors. */
-	_Check_return_ inline float adist(_In_ Vector2 v, _In_ Vector2 w)
-	{
-		return abs(dist(v, w));
-	}
-
 	/* Returns the dot product of the two specified vectors. */
 	_Check_return_ inline float dot(_In_ Vector2 v, _In_ Vector2 w)
 	{
@@ -62,6 +51,18 @@ namespace DeJong
 	_Check_return_ inline float length(_In_ Vector2 v)
 	{
 		return sqrt(lengthsqrd(v));
+	}
+
+	/* Returns the distance between the two specified vectors. */
+	_Check_return_ inline float dist(_In_ Vector2 v, _In_ Vector2 w)
+	{
+		return length(w - v);
+	}
+
+	/* Returns the absolute distance between the two specified vectors. */
+	_Check_return_ inline float adist(_In_ Vector2 v, _In_ Vector2 w)
+	{
+		return abs(dist(v, w));
 	}
 
 	/* Returns a vector that defines the highest value from each matching pair of components. */
