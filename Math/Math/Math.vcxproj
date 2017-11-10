@@ -19,13 +19,19 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Configuration.h" />
     <ClInclude Include="Core\Basics.h" />
     <ClInclude Include="Core\Constants.h" />
     <ClInclude Include="Core\Vector2.h" />
+    <ClInclude Include="Core\Vector2_Functions.h" />
     <ClInclude Include="Core\Vector3.h" />
+    <ClInclude Include="Core\Vector3_Functions.h" />
+    <ClInclude Include="Core\Vector4.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Vector2.cpp" />
+    <ClCompile Include="Core\Vector3.cpp" />
+    <ClCompile Include="Core\Vector4.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -92,6 +98,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(SolutionDir)Math;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -114,6 +121,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(SolutionDir)Math;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
