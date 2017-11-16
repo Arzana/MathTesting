@@ -17,6 +17,12 @@
     <Filter Include="Source\Core\Vectors\Algebra">
       <UniqueIdentifier>{32bfc846-d184-4692-ac9b-20b622d11a5e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Core\Matrices">
+      <UniqueIdentifier>{d9020ff1-5d15-478a-ab2a-a14e154a01df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Core\Matrices\Algebra">
+      <UniqueIdentifier>{3ae9f2b6-f4d3-451d-a8a1-38d37c6cd9ee}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Constants.h">
@@ -52,6 +58,18 @@
     <ClInclude Include="Core\Interpolation.h">
       <Filter>Source\Core</Filter>
     </ClInclude>
+    <ClInclude Include="Core\Matrix3.h">
+      <Filter>Source\Core\Matrices</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Matrix3_Functions.h">
+      <Filter>Source\Core\Matrices\Algebra</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Matrix4.h">
+      <Filter>Source\Core\Matrices</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Matrix4_Functions.h">
+      <Filter>Source\Core\Matrices\Algebra</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Vector2.cpp">
@@ -63,6 +81,12 @@
     </ClCompile>
     <ClCompile Include="Core\Vector4.cpp">
       <Filter>Source\Core\Vectors</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Matrix3.cpp">
+      <Filter>Source\Core\Matrices</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Matrix4.cpp">
+      <Filter>Source\Core\Matrices</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
