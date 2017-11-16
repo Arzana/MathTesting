@@ -1,5 +1,6 @@
 #pragma once
 #include "Vector3_Functions.h"
+#include "Matrix3_Functions.h"
 #include "Matrix4.h"
 
 namespace DeJong
@@ -108,7 +109,7 @@ namespace DeJong
 	_Check_return_ Matrix4 rotationY(_In_ float rads)
 	{
 		const float c = cosf(rads);
-		const float s = cosf(rads);
+		const float s = sinf(rads);
 		return Matrix4(c, 0, s, 0, 0, 1, 0, 0, -s, 0, c, 0, 0, 0, 0, 1);
 	}
 
@@ -116,7 +117,7 @@ namespace DeJong
 	_Check_return_ Matrix4 rotationZ(_In_ float rads)
 	{
 		const float c = cosf(rads);
-		const float s = cosf(rads);
+		const float s = sinf(rads);
 		return Matrix4(c, -s, 0, 0, s, c, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
 	}
 
@@ -165,19 +166,59 @@ namespace DeJong
 	}
 
 	/* Transposes the specified matrix. */
-	_Check_return_ Matrix4 transpose(_In_ const Matrix4& m)
+	_Check_return_ Matrix4 transpose(_In_ const Matrix4 &m)
 	{
-#if defined(COLUMN_MAJOR)
-		return Matrix4(m.Column1.X, m.Column1.Y, m.Column1.Z, m.Column1.W,
-					   m.Column2.X, m.Column2.Y, m.Column2.Z, m.Column2.W,
-					   m.Column3.X, m.Column3.Y, m.Column3.Z, m.Column3.W,
-					   m.Column4.X, m.Column4.Y, m.Column4.Z, m.Column4.W);
-#endif
-#if defined(ROW_MAJOR)
-		return Matrix4(m.Row1.X, m.Row2.X, m.Row3.X, m.Row4.X,
-					   m.Row1.Y, m.Row2.Y, m.Row3.Y, m.Row4.Y,
-					   m.Row1.Z, m.Row2.Z, m.Row3.Z, m.Row4.Z,
-					   m.Row1.W, m.Row2.W, m.Row3.W, m.Row4.W);
-#endif
+		return Matrix4(m.GetA(), m.GetE(), m.GetI(), m.GetM(),
+					   m.GetB(), m.GetF(), m.GetJ(), m.GetN(),
+					   m.GetC(), m.GetG(), m.GetK(), m.GetO(),
+					   m.GetD(), m.GetH(), m.GetL(), m.GetP());
+	}
+
+	/* Gets the determinant of the specified matrix. */
+	_Check_return_ float det(_In_ const Matrix4 &m)
+	{
+		const Matrix3 m1 = Matrix3(m.GetF(), m.GetG(), m.GetH(), m.GetJ(), m.GetK(), m.GetL(), m.GetN(), m.GetO(), m.GetP());
+		const Matrix3 m2 = Matrix3(m.GetE(), m.GetG(), m.GetH(), m.GetI(), m.GetK(), m.GetL(), m.GetM(), m.GetO(), m.GetP());
+		const Matrix3 m3 = Matrix3(m.GetE(), m.GetF(), m.GetH(), m.GetI(), m.GetJ(), m.GetL(), m.GetM(), m.GetN(), m.GetP());
+		const Matrix3 m4 = Matrix3(m.GetE(), m.GetF(), m.GetG(), m.GetI(), m.GetJ(), m.GetK(), m.GetM(), m.GetN(), m.GetO());
+		return m.GetA() * det(m1) - m.GetB() * det(m2) + m.GetC() * det(m3) - m.GetD() * det(m4);
+	}
+
+	/* Calculates the cofactor matrix of the specified matrix. */
+	_Check_return_ Matrix4 cofactor(_In_ const Matrix4 &m)
+	{
+		const Matrix3 m11 = Matrix3(m.GetF(), m.GetG(), m.GetH(), m.GetJ(), m.GetK(), m.GetL(), m.GetN(), m.GetO(), m.GetP());
+		const Matrix3 m12 = Matrix3(m.GetE(), m.GetG(), m.GetH(), m.GetI(), m.GetK(), m.GetL(), m.GetM(), m.GetO(), m.GetP());
+		const Matrix3 m13 = Matrix3(m.GetE(), m.GetF(), m.GetH(), m.GetI(), m.GetJ(), m.GetL(), m.GetM(), m.GetN(), m.GetP());
+		const Matrix3 m14 = Matrix3(m.GetE(), m.GetF(), m.GetG(), m.GetI(), m.GetJ(), m.GetK(), m.GetM(), m.GetN(), m.GetO());
+		const Matrix3 m21 = Matrix3(m.GetB(), m.GetC(), m.GetD(), m.GetJ(), m.GetK(), m.GetL(), m.GetN(), m.GetO(), m.GetP());
+		const Matrix3 m22 = Matrix3(m.GetA(), m.GetC(), m.GetD(), m.GetI(), m.GetK(), m.GetL(), m.GetM(), m.GetO(), m.GetP());
+		const Matrix3 m23 = Matrix3(m.GetA(), m.GetB(), m.GetD(), m.GetI(), m.GetJ(), m.GetL(), m.GetM(), m.GetN(), m.GetP());
+		const Matrix3 m24 = Matrix3(m.GetA(), m.GetB(), m.GetC(), m.GetI(), m.GetJ(), m.GetK(), m.GetM(), m.GetN(), m.GetO());
+		const Matrix3 m31 = Matrix3(m.GetB(), m.GetC(), m.GetD(), m.GetF(), m.GetG(), m.GetH(), m.GetN(), m.GetO(), m.GetP());
+		const Matrix3 m32 = Matrix3(m.GetA(), m.GetC(), m.GetD(), m.GetE(), m.GetG(), m.GetH(), m.GetM(), m.GetO(), m.GetP());
+		const Matrix3 m33 = Matrix3(m.GetA(), m.GetB(), m.GetD(), m.GetE(), m.GetF(), m.GetH(), m.GetM(), m.GetN(), m.GetP());
+		const Matrix3 m34 = Matrix3(m.GetA(), m.GetB(), m.GetC(), m.GetE(), m.GetF(), m.GetG(), m.GetM(), m.GetN(), m.GetO());
+		const Matrix3 m41 = Matrix3(m.GetB(), m.GetC(), m.GetD(), m.GetE(), m.GetF(), m.GetG(), m.GetJ(), m.GetK(), m.GetL());
+		const Matrix3 m42 = Matrix3(m.GetA(), m.GetC(), m.GetD(), m.GetE(), m.GetG(), m.GetH(), m.GetI(), m.GetK(), m.GetL());
+		const Matrix3 m43 = Matrix3(m.GetA(), m.GetB(), m.GetD(), m.GetE(), m.GetF(), m.GetH(), m.GetI(), m.GetJ(), m.GetK());
+		const Matrix3 m44 = Matrix3(m.GetA(), m.GetB(), m.GetC(), m.GetE(), m.GetF(), m.GetG(), m.GetI(), m.GetJ(), m.GetK());
+
+		return Matrix4(det(m11), -det(m12), det(m13), -det(m14),
+					   -det(m21), det(m22), -det(m23), det(m24),
+					   det(m31), -det(m32), det(m33), -det(m34),
+					   -det(m41), det(m42), -det(m43), det(m44));
+	}
+
+	/* Calculates the adjugate of the specified matrix. */
+	_Check_return_ Matrix4 adj(_In_ const Matrix4 &m)
+	{
+		return transpose(cofactor(m));
+	}
+
+	/* Calculates the inverse of the specified matrix. */
+	_Check_return_ Matrix4 inverse(_In_ const Matrix4 &m)
+	{
+		return recip(det(m)) * adj(m);
 	}
 }

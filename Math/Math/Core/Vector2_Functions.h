@@ -35,6 +35,12 @@ namespace DeJong
 		return v.X * w.Y - v.Y * w.X;
 	}
 
+	/* Returns the area of th parallelogram that v and w define. */
+	_Check_return_ inline float det(_In_ float a, _In_ float b, _In_ float c, _In_ float d)
+	{
+		return a * d - b * c;
+	}
+
 	/* Returns the dot product of the two specified vectors. */
 	_Check_return_ inline float dot(_In_ Vector2 v, _In_ Vector2 w)
 	{

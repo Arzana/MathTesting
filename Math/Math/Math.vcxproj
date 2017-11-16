@@ -34,6 +34,7 @@
     <ClInclude Include="Core\Vector4.h" />
     <ClInclude Include="Core\Vector4_Functions.h" />
     <ClInclude Include="Core\Vectors.h" />
+    <ClInclude Include="Shapes\Rectangle.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Matrix3.cpp" />

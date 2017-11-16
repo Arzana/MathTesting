@@ -10,6 +10,16 @@ using namespace DeJong;
 */
 const Matrix4 Matrix4::Identity = Matrix4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
 
+Matrix4 DeJong::Matrix4::operator*(float scalar) const
+{
+#if defined(COLUMN_MAJOR)
+	return Matrix4(Column1 * scalar, Column2 * scalar, Column3 * scalar, Column4 * scalar);
+#endif
+#if defined(ROW_MAJOR)
+	return Matrix4(Row1 * scalar, Row2 * scalar, Row3 * scalar, Row4 * scalar);
+#endif
+}
+
 Vector4 DeJong::Matrix4::operator*(Vector3 v) const
 {
 #if defined(COLUMN_MAJOR)

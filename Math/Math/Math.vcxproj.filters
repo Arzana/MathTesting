@@ -23,6 +23,9 @@
     <Filter Include="Source\Core\Matrices\Algebra">
       <UniqueIdentifier>{3ae9f2b6-f4d3-451d-a8a1-38d37c6cd9ee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Shapes">
+      <UniqueIdentifier>{330d636d-e9a6-481f-8f2a-44686331c2ac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Constants.h">
@@ -69,6 +72,9 @@
     </ClInclude>
     <ClInclude Include="Core\Matrix4_Functions.h">
       <Filter>Source\Core\Matrices\Algebra</Filter>
+    </ClInclude>
+    <ClInclude Include="Shapes\Rectangle.h">
+      <Filter>Source\Shapes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,13 +1,18 @@
-#include "Core\Matrix3_Functions.h"
-#include "Core\Interpolation.h"
+#include "Core\Matrix4_Functions.h"
+
+using namespace DeJong;
 
 int main(void)
 {
-	for (float i = 0.0f; i < 1.0f; i += 0.1f)
-	{
-		printf("%f\n", DeJong::smoothstep(i));
-	}
+	Matrix3 a = rotation(PI2);
+	Matrix3 b = inverse(a);
+	Vector2 v = Vect2::UnitX * a;
+	Vector2 u = v * b;
 
-	getchar();
+	Matrix4 A = rotationZ(PI2);
+	Matrix4 B = inverse(A);
+	Vector4 V = Vect4::UnitX * A;
+	Vector4 U = V * B;
+
 	return 0;
 }

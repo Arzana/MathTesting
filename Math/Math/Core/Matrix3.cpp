@@ -9,16 +9,20 @@ using namespace DeJong;
 */
 const Matrix3 Matrix3::Identity = Matrix3(1, 0, 0, 0, 1, 0, 0, 0, 1);
 
-Vector2 DeJong::Matrix3::operator*(Vector2 v) const
+Matrix3 DeJong::Matrix3::operator*(float scalar) const
 {
 #if defined(COLUMN_MAJOR)
-	return Vector2(v.X * Column1.X + v.Y * Column2.X + Column3.X,
-				   v.X * Column1.Y + v.Y * Column2.Y + Column3.Y);
+	return Matrix3(Column1 * scalar, Column2 * scalar, Column3 * scalar);
 #endif
 #if defined(ROW_MAJOR)
-	return Vector2(v.X * Row1.X + v.Y * Row1.Y + Row1.Z,
-				   v.X * Row2.X + v.Y * Row2.Y + Row2.Z);
+	return Matrix3(Row1 * scalar, Row2 * scalar, Row3 * scalar);
 #endif
+}
+
+Vector2 DeJong::Matrix3::operator*(Vector2 v) const
+{
+	return Vector2(v.X * GetA() + v.Y * GetB() + GetC(),
+				   v.X * GetD() + v.Y * GetE() + GetF());
 }
 
 Vector3 DeJong::Matrix3::operator*(Vector3 v) const

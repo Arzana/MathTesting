@@ -6,7 +6,7 @@
 
 namespace DeJong
 {
-	/* 
+	/*
 	Defines a 4x4 square matrix.
 	| A  B  C  D |
 	| E  F  G  H |
@@ -29,12 +29,29 @@ namespace DeJong
 #endif
 		{}
 
+		/* Initializes a new instance of a 4x4 square matrix from a predefined matrix. */
+		Matrix4(_In_ const Matrix4 &value)
+#if defined(COLUMN_MAJOR)
+			: Column1(value.Column1), Column2(value.Column2), Column3(value.Column3), Column4(value.Column4)
+#endif
+#if defined(ROW_MAJOR)
+			: Row1(value.Row1), Row2(value.Row2), Row3(value.Row3), Row4(value.Row4)
+#endif
+		{}
+
+		/* Scales the matrix by a constant. */
+		_Check_return_ Matrix4 operator *(_In_ float scalar) const;
 		/* Transforms the specified three dimentional vector with the specified matrix. */
 		_Check_return_ Vector4 operator *(_In_ Vector3 v) const;
 		/* Transforms a specified four dimentional vector with the specified matrix. */
 		_Check_return_ Vector4 operator *(_In_ Vector4 v) const;
 		/* Multiplies two matrices and return their product. */
 		_Check_return_ Matrix4 operator *(_In_ const Matrix4 &m) const;
+		/* Scales the matrix by a constant and stores the result in the matrix. */
+		inline const Matrix4& operator *=(_In_ float scalar)
+		{
+			return *this = (*this * scalar);
+		}
 		/* Multiples two matrices and stores their product in the left matrix. */
 		inline const Matrix4& operator *=(_In_ const Matrix4 &m)
 		{
@@ -49,12 +66,7 @@ namespace DeJong
 		_Check_return_ inline Vector3 GetBackwards(void) const
 		{
 #if defined(RIGHT_HAND)
-#if defined(COLUMN_MAJOR)
-			return Vector3(Column3.X, Column3.Y, Column3.Z);
-#endif
-#if defined(ROW_MAJOR)
-			return Vector3(Row1.Z, Row2.Z, Row3.Z);
-#endif
+			return Vector3(GetC(), GetG(), GetK());
 #endif
 #if defined(LEFT_HAND)
 			return -GetForward();
@@ -71,12 +83,7 @@ namespace DeJong
 		_Check_return_ inline Vector3 GetForward(void) const
 		{
 #if defined(LEFT_HAND)
-#if defined(COLUMN_MAJOR)
-			return Vector3(Column3.X, Column3.Y, Column3.Z);
-#endif
-#if defined(ROW_MAJOR)
-			return Vector3(Row1.Z, Row2.Z, Row3.Z);
-#endif
+			return Vector3(GetC(), GetG(), GetK());
 #endif
 #if defined(RIGHT_HAND)
 			return -GetBackwards();
@@ -92,33 +99,194 @@ namespace DeJong
 		/* Gets a vector that defines the right direction for this matrix. */
 		_Check_return_ inline Vector3 GetRight(void) const
 		{
-#if defined(COLUMN_MAJOR)
-			return Vector3(Column1.X, Column1.Y, Column1.Z);
-#endif
-#if defined(ROW_MAJOR)
-			return Vector3(Row1.X, Row2.X, Row3.X);
-#endif
+			return Vector3(GetA(), GetE(), GetI());
 		}
 
 		/* Gets a vector that defines the up direction or this matrix. */
 		_Check_return_ inline Vector3 GetUp(void) const
 		{
-#if defined(COLUMN_MAJOR)
-			return Vector3(Column2.X, Column2.Y, Column2.Z);
-#endif
-#if defined(ROW_MAJOR)
-			return Vector3(Row1.Y, Row2.Y, Row3.Y);
-#endif
+			return Vector3(GetB(), GetF(), GetJ());
 		}
 
 		/* Gets the translation of this matrix. */
 		_Check_return_ inline Vector3 GetTranslation(void) const
 		{
+			return Vector3(GetD(), GetH(), GetL());
+		}
+
+		/* Gets the value at [0, 0]. */
+		_Check_return_ inline float GetA(void) const
+		{
 #if defined(COLUMN_MAJOR)
-			return Vector3(Column4.X, Column4.Y, Column4.Z);
+			return Column1.X;
 #endif
-#if defined (ROW_MAJOR)
-			return Vector3(Row1.W, Row2.W, Row3.W);
+#if defined(ROW_MAJOR)
+			return Row1.X;
+#endif
+		}
+
+		/* Gets the value at [0, 1]. */
+		_Check_return_ inline float GetB(void) const
+		{
+#if defined(COLUMN_MAJOR)
+			return Column2.X;
+#endif
+#if defined(ROW_MAJOR)
+			return Row1.Y;
+#endif
+		}
+
+		/* Gets the value at [0, 2]. */
+		_Check_return_ inline float GetC(void) const
+		{
+#if defined(COLUMN_MAJOR)
+			return Column3.X;
+#endif
+#if defined(ROW_MAJOR)
+			return Row1.Z;
+#endif
+		}
+
+		/* Gets the value at [0, 3]. */
+		_Check_return_ inline float GetD(void) const
+		{
+#if defined(COLUMN_MAJOR)
+			return Column4.X;
+#endif
+#if defined(ROW_MAJOR)
+			return Row1.W;
+#endif
+		}
+
+		/* Gets the value at [1, 0]. */
+		_Check_return_ inline float GetE(void) const
+		{
+#if defined(COLUMN_MAJOR)
+			return Column1.Y;
+#endif
+#if defined(ROW_MAJOR)
+			return Row2.X;
+#endif
+		}
+
+		/* Gets the value at [1, 1]. */
+		_Check_return_ inline float GetF(void) const
+		{
+#if defined(COLUMN_MAJOR)
+			return Column2.Y;
+#endif
+#if defined(ROW_MAJOR)
+			return Row2.Y;
+#endif
+		}
+
+		/* Gets the value at [1, 2]. */
+		_Check_return_ inline float GetG(void) const
+		{
+#if defined(COLUMN_MAJOR)
+			return Column3.Y;
+#endif
+#if defined(ROW_MAJOR)
+			return Row2.Z;
+#endif
+		}
+
+		/* Gets the value at [1, 3]. */
+		_Check_return_ inline float GetH(void) const
+		{
+#if defined(COLUMN_MAJOR)
+			return Column4.Y;
+#endif
+#if defined(ROW_MAJOR)
+			return Row2.W;
+#endif
+		}
+
+		/* Gets the value at [2, 0]. */
+		_Check_return_ inline float GetI(void) const
+		{
+#if defined(COLUMN_MAJOR)
+			return Column1.Z;
+#endif
+#if defined(ROW_MAJOR)
+			return Row3.X;
+#endif
+		}
+
+		/* Gets the value at [2, 1]. */
+		_Check_return_ inline float GetJ(void) const
+		{
+#if defined(COLUMN_MAJOR)
+			return Column2.Z;
+#endif
+#if defined(ROW_MAJOR)
+			return Row3.Y;
+#endif
+		}
+
+		/* Gets the value at [2, 2]. */
+		_Check_return_ inline float GetK(void) const
+		{
+#if defined(COLUMN_MAJOR)
+			return Column3.Z;
+#endif
+#if defined(ROW_MAJOR)
+			return Row3.Z;
+#endif
+		}
+
+		/* Gets the value at [2, 3]. */
+		_Check_return_ inline float GetL(void) const
+		{
+#if defined(COLUMN_MAJOR)
+			return Column4.Z;
+#endif
+#if defined(ROW_MAJOR)
+			return Row3.W;
+#endif
+		}
+
+		/* Gets the value at [3, 0]. */
+		_Check_return_ inline float GetM(void) const
+		{
+#if defined(COLUMN_MAJOR)
+			return Column1.W;
+#endif
+#if defined(ROW_MAJOR)
+			return Row4.X;
+#endif
+		}
+
+		/* Gets the value at [3, 1]. */
+		_Check_return_ inline float GetN(void) const
+		{
+#if defined(COLUMN_MAJOR)
+			return Column2.W;
+#endif
+#if defined(ROW_MAJOR)
+			return Row4.Y;
+#endif
+		}
+
+		/* Gets the value at [3, 2]. */
+		_Check_return_ inline float GetO(void) const
+		{
+#if defined(COLUMN_MAJOR)
+			return Column3.W;
+#endif
+#if defined(ROW_MAJOR)
+			return Row4.Z;
+#endif
+		}
+
+		/* Gets the value at [3, 3]. */
+		_Check_return_ inline float GetP(void) const
+		{
+#if defined(COLUMN_MAJOR)
+			return Column4.W;
+#endif
+#if defined(ROW_MAJOR)
+			return Row4.W;
 #endif
 		}
 
@@ -138,6 +306,7 @@ namespace DeJong
 		friend Matrix4 view(float, float, float, float, Vector3);
 		friend Matrix4 lookat(Vector3, Vector3, Vector3);
 		friend Matrix4 transpose(const Matrix4&);
+		friend Matrix4 cofactor(const Matrix4&);
 
 #if defined(COLUMN_MAJOR)
 		Vector4 Column1, Column2, Column3, Column4;
@@ -159,4 +328,28 @@ namespace DeJong
 #endif
 		{}
 	};
+
+	/* Scales the matrix by a constant. */
+	_Check_return_ inline Matrix4 operator *(_In_ float scalar, const Matrix4 &m)
+	{
+		return m * scalar;
+	}
+
+	/* Transforms the specified three dimentional vector with the specified matrix. */
+	_Check_return_ inline Vector4 operator *(_In_ Vector3 v, _In_ const Matrix4 &m)
+	{
+		return m * v;
+	}
+
+	/* Transforms the specified four dimentional vector with the specified matrix. */
+	_Check_return_ inline Vector4 operator *(_In_ Vector4 v, _In_ const Matrix4 &m)
+	{
+		return m * v;
+	}
+
+	/* Transforms the specified four dimentional vector with the specified matrix. */
+	inline Vector4 operator *=(_In_ Vector4 v, _In_ const Matrix4 &m)
+	{
+		return v = (m * v);
+	}
 }
