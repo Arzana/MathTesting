@@ -4,13 +4,13 @@
 
 namespace DeJong
 {
-	/* Performs linear interpolation between two specified point with a specified amount. */
+	/* Performs linear interpolation between two specified points with a specified amount. */
 	_Check_return_ inline float lerp(_In_ float low, _In_ float high, _In_ float a)
 	{
 		return low + (high - low) * a;
 	}
 
-	/* Performs inverse linear interpolation between two point with a specified point. */
+	/* Performs inverse linear interpolation between two specified points with a specified point. */
 	_Check_return_ inline float invLerp(_In_ float low, _In_ float high, _In_ float v)
 	{
 		return (v - low) / (high - low);
@@ -46,5 +46,11 @@ namespace DeJong
 	_Check_return_ inline float smoothstep(_In_ float a)
 	{
 		return hermite(a);
+	}
+
+	/* Performs cubic catmull rom spline interpolation using specified points. */
+	_Check_return_ inline float catmullrom(_In_ float first, _In_ float second, _In_ float third, _In_ float forth, _In_ float a)
+	{
+		return 0.5f * (2.0f * second + (third - first) * a + (2.0f * first - 5.0f * second + 4.0f * third - forth) * sqr(a) + (3.0f * second - first - 3.0f * third + forth) * cube(a));
 	}
 }

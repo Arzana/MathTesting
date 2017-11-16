@@ -75,4 +75,44 @@ namespace DeJong
 	{
 		return Vector4(rectify(v.X), rectify(v.Y), rectify(v.Z), rectify(v.W));
 	}
+
+	/* Performs linear interpolation between two specified points with a specified amount. */
+	_Check_return_ inline Vector4 lerp(_In_ Vector4 low, _In_ Vector4 high, _In_ float a)
+	{
+		return Vector4(lerp(low.X, high.X, a), lerp(low.Y, high.Y, a), lerp(low.Z, high.Z, a), lerp(low.W, high.W, a));
+	}
+
+	/* Performs inverse linear interpolation between two specified points with a specified point. */
+	_Check_return_ inline Vector4 invLerp(_In_ Vector4 low, _In_ Vector4 high, _In_ Vector4 v)
+	{
+		const Vector4 d = high - low;
+		return dot(v - low, d) / lengthsqrd(d);
+	}
+
+	/* Performs cubic hermite spline interpolation with specified lower and higher bounds and derivatives. */
+	_Check_return_ inline Vector4 hermite(_In_ Vector4 low, _In_ Vector4 lowdir, _In_ Vector4 high, _In_ Vector4 highdir, _In_ float a)
+	{
+		return Vector4(hermite(low.X, lowdir.X, high.X, highdir.X, a), 
+					   hermite(low.Y, lowdir.Y, high.Y, highdir.Y, a), 
+					   hermite(low.Z, lowdir.Z, high.Z, highdir.Z, a), 
+					   hermite(low.W, lowdir.W, high.W, highdir.W, a));
+	}
+
+	/* 
+	Performs cubic hermite spline interpolation with specified lower and higher bounds.
+	Derivatives = 0.
+	*/
+	_Check_return_ inline Vector4 hermite(_In_ Vector4 low, _In_ Vector4 high, _In_ float a)
+	{
+		return Vector4(hermite(low.X, high.X, a), hermite(low.Y, high.Y, a), hermite(low.Z, high.Z, a), hermite(low.W, high.W, a));
+	}
+
+	/* Performs cubic catmull rom spline interpolation with specified points. */
+	_Check_return_ inline Vector4 catmullrom(_In_ Vector4 first, _In_ Vector4 second, _In_ Vector4 third, _In_ Vector4 forth, _In_ float a)
+	{
+		return Vector4(catmullrom(first.X, second.X, third.X, forth.X, a), 
+					   catmullrom(first.Y, second.Y, third.Y, forth.Y, a), 
+					   catmullrom(first.Z, second.Z, third.Z, forth.Z, a),
+					   catmullrom(first.W, second.W, third.W, forth.W, a));
+	}
 }

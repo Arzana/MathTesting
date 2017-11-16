@@ -1,6 +1,7 @@
 #pragma once
 #include "Vector3.h"
 #include "Basics.h"
+#include "Interpolation.h"
 
 namespace DeJong
 {
@@ -82,5 +83,39 @@ namespace DeJong
 	_Check_return_ inline Vector3 rectify(_In_ Vector3 v)
 	{
 		return Vector3(rectify(v.X), rectify(v.Y), rectify(v.Z));
+	}
+
+	/* Performs linear interpolation between two specified points with a specified amount. */
+	_Check_return_ inline Vector3 lerp(_In_ Vector3 low, _In_ Vector3 high, _In_ float a)
+	{
+		return Vector3(lerp(low.X, high.X, a), lerp(low.Y, high.Y, a), lerp(low.Z, high.Z, a));
+	}
+
+	/* Performs inverse linear interpolation between two specified points with a specified point. */
+	_Check_return_ inline float invLerp(_In_ Vector3 low, _In_ Vector3 high, _In_ Vector3 v)
+	{
+		const Vector3 d = high - low;
+		return dot(v - low, d) / lengthsqrd(d);
+	}
+
+	/* Performs cubic hermite spline interpolation with specified lower and higher bounds and derivatives. */
+	_Check_return_ inline Vector3 hermite(_In_ Vector3 low, _In_ Vector3 lowdir, _In_ Vector3 high, _In_ Vector3 highdir, _In_ float a)
+	{
+		return Vector3(hermite(low.X, lowdir.X, high.X, highdir.X, a), hermite(low.Y, lowdir.Y, high.Y, highdir.Y, a), hermite(low.Z, lowdir.Z, high.Z, highdir.Z, a));
+	}
+
+	/*
+	Performs cubic hermite spline interpolation with specified lower and higher bounds.
+	Derivatives = 0.
+	*/
+	_Check_return_ inline Vector3 hermite(_In_ Vector3 low, _In_ Vector3 high, _In_ float a)
+	{
+		return Vector3(hermite(low.X, high.X, a), hermite(low.Y, high.Y, a), hermite(low.Z, high.Z, a));
+	}
+
+	/* Performs cubic catmull rom spline interpolation with specified points. */
+	_Check_return_ inline Vector3 catmullrom(_In_ Vector3 first, _In_ Vector3 second, _In_ Vector3 third, _In_ Vector3 forth, _In_ float a)
+	{
+		return Vector3(catmullrom(first.X, second.X, third.X, forth.X, a), catmullrom(first.Y, second.Y, third.Y, forth.Y, a), catmullrom(first.Z, second.Z, third.Z, forth.Z, a));
 	}
 }

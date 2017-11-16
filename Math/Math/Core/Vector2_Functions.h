@@ -94,4 +94,38 @@ namespace DeJong
 	{
 		return Vector2(rectify(v.X), rectify(v.Y));
 	}
+
+	/* Performs linear interpolation between two specified points with a specified amount. */
+	_Check_return_ inline Vector2 lerp(_In_ Vector2 low, _In_ Vector2 high, _In_ float a)
+	{
+		return Vector2(lerp(low.X, high.X, a), lerp(low.X, high.X, a));
+	}
+
+	/* Performs inverse linear interpolation between two specified points with a specified point. */
+	_Check_return_ inline float invLerp(_In_ Vector2 low, _In_ Vector2 high, _In_ Vector2 v)
+	{
+		const Vector2 d = high - low;
+		return dot(v - low, d) / lengthsqrd(d);
+	}
+
+	/* Performs cubic hermite spline interpolation with specified lower and higher bounds and derivatives. */
+	_Check_return_ inline Vector2 hermite(_In_ Vector2 low, _In_ Vector2 lowdir, _In_ Vector2 high, _In_ Vector2 highdir, _In_ float a)
+	{
+		return Vector2(hermite(low.X, lowdir.X, high.X, highdir.X, a), hermite(low.Y, lowdir.Y, high.Y, highdir.Y, a));
+	}
+
+	/* 
+	Performs cubic hermite spline interpolation with specified lower and higher bounds.
+	Derivatives = 0.
+	*/
+	_Check_return_ inline Vector2 hermite(_In_ Vector2 low, _In_ Vector2 high, _In_ float a)
+	{
+		return Vector2(hermite(low.X, high.X, a), hermite(low.Y, high.Y, a));
+	}
+
+	/* Performs cubic catmull rom spline interpolation with specified points. */
+	_Check_return_ inline Vector2 catmullrom(_In_ Vector2 first, _In_ Vector2 second, _In_ Vector2 third, _In_ Vector2 forth, _In_ float a)
+	{
+		return Vector2(catmullrom(first.X, second.X, third.X, forth.X, a), catmullrom(first.Y, second.Y, third.Y, forth.Y, a));
+	}
 }

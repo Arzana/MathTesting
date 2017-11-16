@@ -13,9 +13,9 @@ namespace DeJong
 	typedef uint64_t	uint64;
 
 	/* unsigned char. */
-	typedef uint8				byte;
+	typedef uint8		byte;
 	/* Unsigned char. */
-	typedef uint8				octet;
+	typedef uint8		octet;
 
 	/* Euler's constant. */
 	constexpr float E = 2.71828182845904523536f;
