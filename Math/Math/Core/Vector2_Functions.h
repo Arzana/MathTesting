@@ -35,7 +35,7 @@ namespace DeJong
 		return v.X * w.Y - v.Y * w.X;
 	}
 
-	/* Returns the area of th parallelogram that v and w define. */
+	/* Returns the area of th parallelogram that the specified matrix components define. */
 	_Check_return_ inline float det(_In_ float a, _In_ float b, _In_ float c, _In_ float d)
 	{
 		return a * d - b * c;

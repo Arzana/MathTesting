@@ -35,6 +35,7 @@
     <ClInclude Include="Core\Vector4_Functions.h" />
     <ClInclude Include="Core\Vectors.h" />
     <ClInclude Include="Shapes\Rectangle.h" />
+    <ClInclude Include="Shapes\Rectangle_Functions.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Matrix3.cpp" />
@@ -43,6 +44,7 @@
     <ClCompile Include="Core\Vector3.cpp" />
     <ClCompile Include="Core\Vector4.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Shapes\Rectangle.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

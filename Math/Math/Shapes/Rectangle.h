@@ -1,6 +1,7 @@
 #pragma once
 #include "Core\Basics.h"
 #include "Core\Vector2.h"
+#include "Configuration.h"
 
 namespace DeJong
 {
@@ -35,6 +36,18 @@ namespace DeJong
 			: Position(value.Position), Size(value.Size)
 		{}
 
+		/* Checks whether the input rectangle is equal to the source rectangle. */
+		_Check_return_ inline bool operator ==(_In_ Rectangle other) const
+		{
+			return Position == other.Position && Size == other.Size;
+		}
+
+		/* Checks whether the input rectangle is different from the source rectangle. */
+		_Check_return_ inline bool operator !=(_In_ Rectangle other) const
+		{
+			return Position != other.Position || Size != other.Size;
+		}
+
 		/* Gets the absolute width of the rectangle. */
 		_Check_return_ inline float GetWidth(void) const
 		{
@@ -47,5 +60,51 @@ namespace DeJong
 			return abs(Size.Y);
 		}
 
+		/* Gets the Y coordinate of the top of the rectangle. */
+		_Check_return_ inline float GetTop(void) const
+		{
+#if defined(TOP_ORIGIN)
+			return Size.Y > 0.0f ? Position.Y : (Position.Y + Size.Y);
+#endif
+#if defined(BOTTOM_ORIGIN)
+			return Size.Y > 0.0f ? (Position.Y + Size.Y) : Position.Y;
+#endif
+		}
+
+		/* Gets the Y coordinate of the bottom of the rectangle. */
+		_Check_return_ inline float GetBottom(void) const
+		{
+#if defined(TOP_ORIGIN)
+			return Size.Y > 0.0f ? (Position.Y + Size.Y) : Position.Y;
+#endif
+#if defined(BOTTOM_ORIGIN)
+			return Size.Y > 0.0f ? Position.Y : (Position.Y + Size.Y);
+#endif
+		}
+
+		/* Gets the X coordinate of the right of the rectangle. */
+		_Check_return_ inline float GetRight(void) const
+		{
+#if defined(TOP_ORIGIN)
+			return Size.X > 0.0f ? (Position.X + Size.X) : Position.X;
+#endif
+#if defined(BOTTOM_ORIGIN)
+			return Size.X > 0.0f ? Position.X : (Position.X + Size.X);
+#endif
+		}
+
+		/* Gets the X coordinate of the left of the rectangle. */
+		_Check_return_ inline float GetLeft(void) const
+		{
+#if defined(TOP_ORIGIN)
+			return Size.X > 0.0f ? Position.X : (Position.X + Size.X);
+#endif
+#if defined(BOTTOM_ORIGIN)
+			return Size.X > 0.0f ? (Position.X + Size.X) : Position.X;
+#endif
+		}
+
+		/* Pushes the edges of the rectangle out by a specified amount. */
+		void Inflate(_In_ float horizontal, _In_ float vertical);
 	} Rect;
 }

@@ -76,6 +76,9 @@
     <ClInclude Include="Shapes\Rectangle.h">
       <Filter>Source\Shapes</Filter>
     </ClInclude>
+    <ClInclude Include="Shapes\Rectangle_Functions.h">
+      <Filter>Source\Shapes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Vector2.cpp">
@@ -93,6 +96,9 @@
     </ClCompile>
     <ClCompile Include="Core\Matrix4.cpp">
       <Filter>Source\Core\Matrices</Filter>
+    </ClCompile>
+    <ClCompile Include="Shapes\Rectangle.cpp">
+      <Filter>Source\Shapes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
